@@ -18,17 +18,18 @@ public class Client {
         String message = sc.nextLine();
         // As long as the user does not enter "exit", the program works
         while (!message.equals("exit")){
-            
+            // Set the port
             socket = new Socket(host.getHostName(), 3000);
             oos = new ObjectOutputStream(socket.getOutputStream());
+            // Send the message to the local server
             oos.writeObject(message);
-
+            // Get the response from the server
             ois = new ObjectInputStream(socket.getInputStream());
             String response = (String) ois.readObject();
             System.out.println(response);
+            // Input again from the user
             System.out.println("Enter your desire :");
             message = sc.nextLine();
-
             //close resources
             ois.close();
             oos.close();

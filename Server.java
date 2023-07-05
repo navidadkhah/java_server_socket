@@ -7,11 +7,14 @@ import java.net.ServerSocket;
 import java.lang.Math;
 
 public class Server {
-    static ServerSocket server;
-    static int port = 3000;
-    static boolean flag;
+    // Set the global variables
+    private static ServerSocket server;
+    private static int port = 3000;
+    private static boolean is_404;
 
+    // This function is used for calculating the operations that we get from the client
     static int calculate(String message) {
+        // Split the message
         String[] witch = message.split(" ");
         int result = 0;
         switch (witch[0]) {
@@ -26,41 +29,38 @@ public class Server {
                 int temp = (int) Math.tan(Integer.parseInt(witch[1]));
                 result = 1 / temp;
             }
-            default -> flag = false;
+            default -> is_404 = false;
         }
+        // return the result
         return result;
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-
+        // Setting the port of server
         server = new ServerSocket(port);
-
         while (true) {
-            flag = true;
-
+            is_404 = true;
+            // Get the early time
             long start = System.currentTimeMillis();
             System.out.println("Waiting for the client request");
-
+            // If the message has been sent, it has to go to the next line
             Socket socket = server.accept();
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
             String message = (String) ois.readObject();
             System.out.println("Message Received: " + message);
-
+            // Call the calculate function
             int result = calculate(message);
+            // Get the secondary time
             long finish = System.currentTimeMillis();
-
+            // Calculating the time that the server is working
             long time = finish - start;
-            System.out.println(time);
-
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-
-            if (!flag) {
+            // If operation not found, print "Operation not found 404!" else goto else:)
+            if (!is_404) {
                 oos.writeObject("Operation not found 404!");
             } else {
                 oos.writeObject("Calculation time: " + time + " result: " + result);
             }
-
-
             //close resources
             ois.close();
             oos.close();

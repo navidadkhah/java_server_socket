@@ -15,6 +15,8 @@ public class Client {
         Scanner sc = new Scanner(System.in);
         // Get the input
         System.out.println("Enter your desire between(Add, Subtract, Divide, Multiply, Sin, Cos, Tan, Cot): ");
+        System.out.println("Input format: (operand number1 number 2");
+        System.out.println("For terminate the program, enter exit");
         String message = sc.nextLine();
         // As long as the user does not enter "exit", the program works
         while (!message.equals("exit")){

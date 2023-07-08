@@ -13,18 +13,18 @@ public class Server {
     private static boolean is_404;
 
     // This function is used for calculating the operations that we get from the client
-    static int calculate(String message) {
+    static double calculate(String message) {
         // Split the message
         String[] witch = message.split(" ");
-        int result = 0;
+        double result = 0;
         switch (witch[0]) {
-            case "Add" -> result = Integer.parseInt(witch[1]) + Integer.parseInt(witch[2]);
-            case "Subtract" -> result = Integer.parseInt(witch[1]) - Integer.parseInt(witch[2]);
-            case "Divide" -> result = Integer.parseInt(witch[1]) / Integer.parseInt(witch[2]);
-            case "Multiply" -> result = Integer.parseInt(witch[1]) * Integer.parseInt(witch[2]);
-            case "Sin" -> result = (int) Math.sin(Integer.parseInt(witch[1]));
-            case "Cos" -> result = (int) Math.cos(Integer.parseInt(witch[1]));
-            case "Tan" -> result = (int) Math.tan(Integer.parseInt(witch[1]));
+            case "Add" -> result = Double.valueOf(witch[1]) + Integer.parseInt(witch[2]);
+            case "Subtract" -> result = Double.valueOf(witch[1]) - Double.valueOf(witch[2]);
+            case "Divide" -> result = Double.valueOf(witch[1]) / Double.valueOf(witch[2]);
+            case "Multiply" -> result = Double.valueOf(witch[1]) * Double.valueOf(witch[2]);
+            case "Sin" -> result = (int) Math.sin(Double.valueOf(witch[1]));
+            case "Cos" -> result = (int) Math.cos(Double.valueOf(witch[1]));
+            case "Tan" -> result = (int) Math.tan(Double.valueOf(witch[1]));
             case "Cot" -> {
                 int temp = (int) Math.tan(Integer.parseInt(witch[1]));
                 result = 1 / temp;
@@ -49,7 +49,7 @@ public class Server {
             String message = (String) ois.readObject();
             System.out.println("Message Received: " + message);
             // Call the calculate function
-            int result = calculate(message);
+            double result = calculate(message);
             // Get the secondary time
             long finish = System.currentTimeMillis();
             // Calculating the time that the server is working
